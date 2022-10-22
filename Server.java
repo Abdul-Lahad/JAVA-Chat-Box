@@ -1,5 +1,7 @@
 import java.net.*;
 import java.io.*;
+import java.text.SimpleDateFormat;  
+import java.util.Date;
 import javax.swing.BorderFactory;           
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -31,7 +33,10 @@ public class Server extends JFrame{
     private JTextField messageInput=new JTextField();
     private Font font = new Font("Roboto",Font.PLAIN,20);
     private ImageIcon image=new ImageIcon("chat3.png");
-    JOptionPane p=new JOptionPane();   
+    JOptionPane p=new JOptionPane();
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+    Date date = new Date();  
+    
 
 
     // constructer starts

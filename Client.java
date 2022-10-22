@@ -1,22 +1,16 @@
 import java.net.*;
-
+import java.text.SimpleDateFormat;  
+import java.util.Date;
 import javax.swing.Action;
 import javax.swing.BorderFactory;           
 import javax.swing.ImageIcon;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -40,41 +34,31 @@ public class Client extends JFrame implements Action{
     private JTextField messageInput=new JTextField();
     private Font font = new Font("Roboto",Font.PLAIN,20);
     private ImageIcon image=new ImageIcon("chat3.png");
-    public int exit;
-    private JMenuBar bar=new JMenuBar();
-    private JMenu menu=new JMenu("File");
-    JMenuItem t1=new JMenuItem("Save");
-    JMenuItem t2=new JMenuItem("Delete");
-    JMenuItem t3=new JMenuItem("Display");
-    JMenuItem t4=new JMenuItem("Exit");
+    public int exit;SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");  
+    Date date = new Date();  
     
-    
-    
-        
-    
-
     
     //constructer starts   
  public Client(){
        
    try {
               
-      // String port= JOptionPane.showInputDialog("Please Enter the port number ","7778");
-      // int PORT=Integer.parseInt(port);
-      // String IP= JOptionPane.showInputDialog("Please Enter the IP address ","127.0.0.1");
-      // JOptionPane.showMessageDialog(null, "Sending request to server ");
+      String port= JOptionPane.showInputDialog("Please Enter the port number ","7778");
+      int PORT=Integer.parseInt(port);
+      String IP= JOptionPane.showInputDialog("Please Enter the IP address ","127.0.0.1");
+      JOptionPane.showMessageDialog(null, "Sending request to server ");
        
-      // System.out.println("Sending request to server ");   
-      // socket=new Socket(IP,PORT);
-      // System.out.println("connection done");
-              
+      System.out.println("Sending request to server ");   
+      socket=new Socket(IP,PORT);
+      System.out.println("connection done");
+        
       createGUI(); 
       handlEvents();
      
-      // br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-      // out = new PrintWriter(socket.getOutputStream());
+      br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+      out = new PrintWriter(socket.getOutputStream());
                
-      // startReading();         //celling reading method
+      startReading();         //celling reading method
    // startWriting();         //celling writing method
         
                      } 
@@ -84,7 +68,9 @@ public class Client extends JFrame implements Action{
         new Client();
         }
     }
-    
+
+  
+
  private void createGUI(){
             
     this.setTitle("Client Massager [END]");
@@ -92,8 +78,6 @@ public class Client extends JFrame implements Action{
     this.setLocationRelativeTo(null);
     this.setIconImage(image.getImage());
 
-    
-   
 
     //  coding for components
     heading.setFont(font);
@@ -107,9 +91,7 @@ public class Client extends JFrame implements Action{
     messageInput.setHorizontalAlignment(SwingConstants.CENTER);             
     messageArea.setEditable(false);
     
-    heading.setBackground(Color.LIGHT_GRAY);
-    messageArea.setBackground(Color.DARK_GRAY);
-    messageInput.setBackground(Color.GRAY);
+    
     
 
                                       
@@ -123,25 +105,6 @@ public class Client extends JFrame implements Action{
     
     jScrollPane.add(messageArea);
     jScrollPane.setViewportView(messageArea);
-    
-    
-    
-    //adding components
-    
-    menu.add(t1);
-    menu.add(t2);
-    menu.add(t3);
-    menu.add(t4);
-    
-    bar.add(menu);
-    t1.addActionListener(this);
-    t2.addActionListener(this);
-    t3.addActionListener(this);
-    t4.addActionListener(this);
-    this.setJMenuBar(bar);
-
-   
-   
     
     this.add(jScrollPane,BorderLayout.CENTER);
     this.add(heading,BorderLayout.NORTH);
@@ -231,7 +194,10 @@ public class Client extends JFrame implements Action{
                   break;
                               }
         // System.out.println("Server :"+msg);
-           messageArea.append("Server : "+msg+"\n");
+           messageArea.append("Server : "+msg+
+"\n                                                                                      "+
+           formatter.format(date)+"\n");
+          
       } 
       
     }
@@ -272,39 +238,32 @@ public class Client extends JFrame implements Action{
 
       new Thread(r2).start();//starting r2 thread
       }
-    
-      
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-          if(e.getSource()==t1){
+  
+public static void main(String[] args) {
+  new Client();
+}
 
-          }
-          if(e.getSource()==t2){
-            
-          }
-          if(e.getSource()==t3){
-            
-          }
-          if(e.getSource()==t4){
-            dispose();
-          }
 
-        
-      }
-      
-      @Override
-      public Object getValue(String key) {
+
+@Override
+public void actionPerformed(ActionEvent e) {
+  // TODO Auto-generated method stub
+  
+}
+
+
+
+@Override
+public Object getValue(String key) {
   // TODO Auto-generated method stub
   return null;
 }
+
+
 
 @Override
 public void putValue(String key, Object value) {
   // TODO Auto-generated method stub
   
-}
-public static void main(String[] args) {
-  new Client();
 }
 }
